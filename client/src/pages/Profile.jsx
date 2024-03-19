@@ -91,7 +91,7 @@ export default function Profile() {
         <input
           type="text"
           placeholder="username"
-          className="border p-3 rounded-lg"
+          className="border p-3 rounded-lg"    
           id="username"
         />
         <input
@@ -117,3 +117,5 @@ export default function Profile() {
     </div>
   );
 }
+
+
