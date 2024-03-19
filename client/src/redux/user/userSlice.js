@@ -21,11 +21,23 @@ const userSlice = createSlice({
         signInFailure: (state,action) => {
             state.error = action.payload;
             state.loading = false;
-        }
+        },
+        updateUserStart: (state) => {
+            state.loading=true;
+        },
+        updateUserSuccess: (state,action) => {
+            state.currentUser = action.payload;
+            state.loading = false;
+            state.error = null;
+        },
+        updateUserFailure: (state, action) => {
+            state.error = action.payload;
+            state.loading = false;
+        },
     }
 });
 
-export const {signInStart , signInSuccess, signInFailure} = userSlice.actions;
+export const {signInStart , signInSuccess, signInFailure, updateUserFailure, updateUserSuccess, updateUserStart } = userSlice.actions;
 
 // The value of `state` passed into the reducer is the state obtained by combining all reducers with their respective initial states through combine
 // The value of `reducer` in the Redux store will be set to the return value of this function.
