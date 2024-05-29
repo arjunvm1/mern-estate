@@ -27,6 +27,7 @@ export default function CreateListing() {
   const [Uploading, setUploading] = useState(false)
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
+  
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -39,6 +40,7 @@ export default function CreateListing() {
         return;
       }
       setFormData(data)
+      console.log(data);
     }
 
     fetchListing()
