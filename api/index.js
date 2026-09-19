@@ -10,7 +10,7 @@ import path from 'path';
 dotenv.config();
 
 mongoose.connect(process.env.MONGO).then(() => {
-    console.log('MongoDB connected');
+    console.log('MongoDB connected', process.env.MONGO);
     }).catch((err) => {
         console.log(err);
     });

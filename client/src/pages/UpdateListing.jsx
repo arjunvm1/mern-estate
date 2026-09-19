@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react"
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage"
-import { app } from "../firebase"
+import { useEffect, useState } from "react"
+import { supabase } from "../supabase"
 import { useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
 
@@ -71,29 +70,32 @@ export default function CreateListing() {
     }
   }
 
-  const storeImage = async (file) => {
-    return new Promise((resolve, reject) => {
-      const storage = getStorage(app)
-      const fileName = new Date().getTime() + file.name
-      const storageRef = ref(storage, fileName)
-      const uploadTask = uploadBytesResumable(storageRef, file)
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          console.log(`progress is ${progress}% done`)
-        },
-        (error) => {
-          reject(error)
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            resolve(downloadURL)
-          })
-        }
-      )
+const storeImage = async (file) => {
+  const fileExt = file.name.split(".").pop()
+
+  const fileName = `${Date.now()}-${Math.random()
+    .toString(36)
+    .substring(2)}.${fileExt}`
+
+  const filePath = `listings/${fileName}`
+
+  const { error } = await supabase.storage
+    .from("listing-images")
+    .upload(filePath, file, {
+      cacheControl: "3600",
+      upsert: false,
     })
+
+  if (error) {
+    throw error
   }
+
+  const { data } = supabase.storage
+    .from("listing-images")
+    .getPublicUrl(filePath)
+
+  return data.publicUrl
+}
 
   //handleRemoveImage
   const handleRemoveImage = (index) => {

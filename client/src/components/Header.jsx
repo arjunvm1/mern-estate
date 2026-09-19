@@ -5,6 +5,9 @@ import { useSelector } from "react-redux";
 
 export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
+
+  console.log(currentUser);
+  
   const  [searchTerm, setSearchTerm] = useState('')
   const navigate = useNavigate();
 
@@ -58,7 +61,7 @@ export default function Header() {
           </Link>
           <Link to="/profile">
           {currentUser ? (
-            <img className="rounded-full h-7 w-7 object-cover" src={currentUser.avatar} alt="profile" />
+            <img className= "rounded-full h-7 w-7 object-cover" src={currentUser.avatar} alt="profile" />
           ):(<li className=" text-slate-700 hover:underline">Sign In</li>
            )}
             

@@ -22,12 +22,16 @@ export const createCheckoutSession = async (req, res) => {
       quantity: 1,
     }));
 
+    const baseUrl =
+  req.headers.origin ||
+  `${req.protocol}://${req.get("host")}`;
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: lineItems,
       mode: "payment",
-      success_url: "http://127.0.0.1:5173/success",
-      cancel_url: "http://127.0.0.1:5173/cancel",
+      success_url: `${baseUrl}/success`,
+      cancel_url: `${baseUrl}/cancel`,
     });
 
     res.json({ id: session.id });
