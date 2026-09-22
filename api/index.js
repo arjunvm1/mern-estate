@@ -5,6 +5,7 @@ import userRouter from './routes/user.route.js';
 import authRouter from './routes/auth.route.js';
 import listingRouter from './routes/listing.route.js';
 import stripeRouter from './routes/stripe.checkout.js';
+import seoRouter from './routes/seo.route.js';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 
@@ -31,6 +32,9 @@ app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/listing', listingRouter);
 app.use('/api/stripe', stripeRouter);
+
+// SEO Routes
+app.use('/', seoRouter);
 
 // Health Check
 app.get('/api/health', (req, res) => {
